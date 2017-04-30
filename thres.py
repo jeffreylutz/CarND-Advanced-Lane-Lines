@@ -7,16 +7,24 @@ import matplotlib.image as mpimg
 
 
 overhead = cv2.imread('test_images/test7.jpg')
+#h,l = cv2.cvtColor(overhead, cv2.COLOR_BGR2HLS)
+(h,l,s) = cv2.cvtColor(overhead, cv2.COLOR_BGR2HLS)[:,:,:]
 
-s_channel = cv2.cvtColor(overhead, cv2.COLOR_BGR2HLS)[:, :, 2]
+plt.imshow(cv2.cvtColor(overhead,cv2.COLOR_BGR2RGB) )
+plt.show()
+plt.imshow(hls[0])
+plt.show()
+exit(1)
+
+(h,l,s) = cv2.cvtColor(overhead, cv2.COLOR_BGR2HLS)[:,:,:]
 l_channel = cv2.cvtColor(overhead, cv2.COLOR_BGR2LUV)[:, :, 0]
 b_channel = cv2.cvtColor(overhead, cv2.COLOR_BGR2Lab)[:, :, 2]
 
 # Threshold color channel
 s_thresh_min = 150
 s_thresh_max = 255
-s_binary = np.zeros_like(s_channel)
-s_binary[(s_channel >= s_thresh_min) & (s_channel <= s_thresh_max)] = 1
+s_binary = np.zeros_like(s)
+s_binary[(s >= s_thresh_min) & (s <= s_thresh_max)] = 1
 
 b_thresh_min = 155
 b_thresh_max = 190
@@ -40,8 +48,8 @@ while True:
     print('min',min)
     # min = int(input('Enter min: '))
     # max = int(input('Enter max: '))
-    s_binary = np.zeros_like(s_channel)
-    s_binary[(s_channel >= 210) & (s_channel <= 255)] = 1
+    s_binary = np.zeros_like(s)
+    s_binary[(s >= 210) & (s <= 255)] = 1
     b_binary = np.zeros_like(b_channel)
     b_binary[(b_channel >= 170) & (b_channel <= 255)] = 1
     l_binary = np.zeros_like(l_channel)
